@@ -1,3 +1,5 @@
+package com.artur.sardinha.enums;
+
 public enum Categoria
 {
     ALIMENTO,

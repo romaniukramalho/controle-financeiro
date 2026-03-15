@@ -1,3 +1,8 @@
+package com.artur.sardinha.model;
+
+import com.artur.sardinha.enums.TipoInvestimento;
+import com.artur.sardinha.enums.Categoria;
+import com.artur.sardinha.enums.TipoTransaction;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -22,7 +27,7 @@ public class Investimento extends Transactions
                 " | Tipo: " + getTipo() +
                 " | Descrição: " + desc +
                 " | Valor: R$ " + valor +
-                " | Categoria: " + categoria +
+                " | com.artur.sardinha.enums.Categoria: " + categoria +
                 " | Data: " + data;
     }
 }

@@ -1,3 +1,7 @@
+package com.artur.sardinha.model;
+
+import com.artur.sardinha.enums.Categoria;
+import com.artur.sardinha.enums.TipoTransaction;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -34,7 +38,7 @@ public abstract class Transactions
         return "ID: " + id +
                 " | Descrição: " + desc +
                 " | Valor: R$ " + valor +
-                " | Categoria: " + categoria +
+                " | com.artur.sardinha.enums.Categoria: " + categoria +
                 " | Data: " + data;
     }
     public Categoria getCategoria()
