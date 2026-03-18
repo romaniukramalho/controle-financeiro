@@ -50,5 +50,5 @@ public abstract class Transactions
     {
         return desc;
     }
-    public Date getData(){ return data;}
+    public LocalDate getData(){ return data;}
 }

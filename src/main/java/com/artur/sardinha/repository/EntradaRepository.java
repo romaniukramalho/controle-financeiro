@@ -24,7 +24,7 @@ public class EntradaRepository
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setBigDecimal(1, ganhos.getValor());
             ps.setString(2, ganhos.getDesc());
-            ps.setDate(3, Date.valueOf(ganhos.getData().toLocalDate()));
+            ps.setDate(3, Date.valueOf(ganhos.getData()));
             ps.setString(4, ganhos.getCategoria().name());
 
             ps.executeUpdate();

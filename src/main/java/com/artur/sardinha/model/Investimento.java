@@ -9,16 +9,26 @@ import java.time.LocalDate;
 public class Investimento extends Transactions
 {
     private TipoInvestimento tipoInvestimento;
-
-    public Investimento(int id, BigDecimal valor, String desc, LocalDate data, Categoria categoria, TipoInvestimento tipoInvestimento)
+    private BigDecimal rentabilidade;
+    private LocalDate vencimento;
+    public Investimento(int id, BigDecimal valor, String desc, LocalDate data, Categoria categoria, TipoInvestimento tipoInvestimento, BigDecimal rentabilidade)
     {
         super(id, valor, desc, data, categoria);
 
         this.tipoInvestimento = tipoInvestimento;
+        this.rentabilidade = rentabilidade;
     }
     @Override
     public TipoTransaction getTipo() {
         return TipoTransaction.INVESTIMENTO;
+    }
+    public TipoInvestimento getTipoInvestimento() {
+        return tipoInvestimento;
+    }
+
+    public BigDecimal getRentabilidade()
+    {
+        return rentabilidade;
     }
     @Override
     public String toString()
@@ -28,6 +38,7 @@ public class Investimento extends Transactions
                 " | Descrição: " + desc +
                 " | Valor: R$ " + valor +
                 " | com.artur.sardinha.enums.Categoria: " + categoria +
-                " | Data: " + data;
+                " | Data: " + data +
+                " | Rentabilidade: " + rentabilidade;
     }
 }

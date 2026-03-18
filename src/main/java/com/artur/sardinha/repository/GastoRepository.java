@@ -22,7 +22,7 @@ public class GastoRepository
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setBigDecimal(1, gasto.getValor());
             ps.setString(2, gasto.getDesc());
-            ps.setDate(3, Date.valueOf(gasto.getData().toLocalDate()));
+            ps.setDate(3, Date.valueOf(gasto.getData()));
             ps.setString(4, gasto.getCategoria().name());
 
             ps.executeUpdate();
