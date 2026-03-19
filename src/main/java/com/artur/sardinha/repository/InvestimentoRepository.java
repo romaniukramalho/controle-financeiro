@@ -28,9 +28,8 @@ public class InvestimentoRepository
             ps.setBigDecimal(1, investimento.getValor());
             ps.setString(2, investimento.getDesc());
             ps.setDate(3, Date.valueOf(investimento.getData()));
-            ps.setString(4, investimento.getCategoria().name());
-            ps.setString(5, investimento.getTipoInvestimento().name());
-            ps.setBigDecimal(6, investimento.getRentabilidade());
+            ps.setString(4, investimento.getTipoInvestimento().name());
+            ps.setBigDecimal(5, investimento.getRentabilidade());
 
             ps.executeUpdate();
             System.out.println("Investimento cadastrado com sucesso!");

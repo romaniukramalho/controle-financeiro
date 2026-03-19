@@ -101,9 +101,6 @@ public class Main {
         System.out.print("Data (AAAA-MM-DD): ");
         LocalDate data = LocalDate.parse(scanner.nextLine());
 
-        System.out.print("Fonte (ex: salário, freelance): ");
-        String fonte = scanner.nextLine();
-
         Ganhos ganho = new Ganhos(0, valor, descricao, data);
         entradaService.registrar(ganho);
     }
@@ -145,6 +142,8 @@ public class Main {
             // rentabilidade = CotacaoService.getRentabilidade(nomeTitulo);
             // dataVencimento = CotacaoService.getDataVencimento(nomeTitulo);
         }
+        Investimento investimento = new Investimento(0, valor, descricao, data, tipo, rentabilidade);
+        investimentoService.registrar(investimento);
     }
     static void listarGastos() {
         List<Gasto> gastos = gastoService.listarTodos();

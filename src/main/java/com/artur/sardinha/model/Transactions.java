@@ -28,7 +28,6 @@ public abstract class Transactions
         this.valor = valor;
         this.desc = desc;
         this.data = data;
-        this.categoria = null;
     }
     public abstract TipoTransaction getTipo();
 
