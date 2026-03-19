@@ -18,14 +18,13 @@ public class EntradaRepository
     }
 
     public void SalvarEntrada(Ganhos ganhos) {
-        String sql = "INSERT INTO ganhos (valor, descricao, data, categoria) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO ganhos (valor, descricao, data) VALUES (?, ?, ?)";
 
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setBigDecimal(1, ganhos.getValor());
             ps.setString(2, ganhos.getDesc());
             ps.setDate(3, Date.valueOf(ganhos.getData()));
-            ps.setString(4, ganhos.getCategoria().name());
 
             ps.executeUpdate();
             System.out.println("Entrada salva com sucesso!");
@@ -47,8 +46,7 @@ public class EntradaRepository
                         rs.getInt("id"),
                         rs.getBigDecimal("valor"),
                         rs.getString("descricao"),
-                        rs.getDate("data").toLocalDate(),
-                        Categoria.valueOf(rs.getString("categoria"))
+                        rs.getDate("data").toLocalDate()
                 );
                 ganhos.add(ganho);
             }

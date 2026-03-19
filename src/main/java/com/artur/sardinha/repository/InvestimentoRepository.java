@@ -20,7 +20,7 @@ public class InvestimentoRepository
 
     public void SalvarInvestimento(Investimento investimento)
     {
-        String sql = "INSERT INTO investimentos (valor, descricao, data, categoria, tipo_investimento, rentabilidade) VALUES (?, ? ,?, ? ,? ,?)";
+        String sql = "INSERT INTO investimentos (valor, descricao, data, tipo_investimento, rentabilidade) VALUES (?, ? ,?, ? ,?)";
 
         try
         {
@@ -58,7 +58,6 @@ public class InvestimentoRepository
                         rs.getBigDecimal("valor"),
                         rs.getString("descricao"),
                         rs.getDate("data").toLocalDate(),
-                        Categoria.valueOf(rs.getString("categoria")),
                         TipoInvestimento.valueOf(rs.getString("tipo_investimento")),
                         rs.getBigDecimal("rentabilidade")
                 );
@@ -70,5 +69,21 @@ public class InvestimentoRepository
             System.out.println("Erro ao buscar investimentos: " + e.getMessage());
         }
         return investimentos;
+    }
+
+    public void deletar(int id)
+    {
+        String sql = "DELETE FROM Ganhos WHERE id = ?";
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            System.out.println("Investimento deletado com sucesso!");
+        }
+        catch(SQLException e)
+        {
+            System.out.println("Nao foi possivel excluir o investimento: "+e.getMessage());
+        }
     }
 }

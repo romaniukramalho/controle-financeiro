@@ -7,9 +7,9 @@ import java.time.LocalDate;
 
 public class Ganhos extends Transactions
 {
-    public Ganhos(int id, BigDecimal valor, String desc, LocalDate data, Categoria categoria)
+    public Ganhos(int id, BigDecimal valor, String desc, LocalDate data)
     {
-        super(id, valor, desc, data, categoria);
+        super(id, valor, desc, data);
     }
     @Override
     public TipoTransaction getTipo() {

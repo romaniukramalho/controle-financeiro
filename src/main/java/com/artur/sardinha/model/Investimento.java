@@ -11,9 +11,9 @@ public class Investimento extends Transactions
     private TipoInvestimento tipoInvestimento;
     private BigDecimal rentabilidade;
     private LocalDate vencimento;
-    public Investimento(int id, BigDecimal valor, String desc, LocalDate data, Categoria categoria, TipoInvestimento tipoInvestimento, BigDecimal rentabilidade)
+    public Investimento(int id, BigDecimal valor, String desc, LocalDate data, TipoInvestimento tipoInvestimento, BigDecimal rentabilidade)
     {
-        super(id, valor, desc, data, categoria);
+        super(id, valor, desc, data);
 
         this.tipoInvestimento = tipoInvestimento;
         this.rentabilidade = rentabilidade;
@@ -37,7 +37,6 @@ public class Investimento extends Transactions
                 " | Tipo: " + getTipo() +
                 " | Descrição: " + desc +
                 " | Valor: R$ " + valor +
-                " | com.artur.sardinha.enums.Categoria: " + categoria +
                 " | Data: " + data +
                 " | Rentabilidade: " + rentabilidade;
     }
