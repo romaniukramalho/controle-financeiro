@@ -23,6 +23,13 @@ public abstract class Transactions
         this.categoria = categoria;
 
     }
+    public Transactions(int id, BigDecimal valor, String desc, LocalDate data) {
+        this.id = id;
+        this.valor = valor;
+        this.desc = desc;
+        this.data = data;
+        this.categoria = null;
+    }
     public abstract TipoTransaction getTipo();
 
     public int getId()
