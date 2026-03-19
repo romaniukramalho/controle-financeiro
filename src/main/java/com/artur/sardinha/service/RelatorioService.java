@@ -1,7 +1,7 @@
 package com.artur.sardinha.service;
 
 import com.artur.sardinha.model.Gasto;
-import com.artur.sardinha.model.Ganhos;
+import com.artur.sardinha.model.Entrada;
 import com.artur.sardinha.model.Investimento;
 import com.artur.sardinha.repository.GastoRepository;
 import com.artur.sardinha.repository.EntradaRepository;
@@ -34,10 +34,10 @@ public class RelatorioService
     }
 
     public BigDecimal calcularTotalEntradas() {
-        List<Ganhos> entradas = entradaRepository.buscarTodos();
+        List<Entrada> entradas = entradaRepository.buscarTodos();
         BigDecimal total = BigDecimal.ZERO;
 
-        for (Ganhos entrada : entradas) {
+        for (Entrada entrada : entradas) {
             total = total.add(entrada.getValor());
         }
 

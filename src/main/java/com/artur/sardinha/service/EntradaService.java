@@ -1,6 +1,6 @@
 package com.artur.sardinha.service;
 
-import com.artur.sardinha.model.Ganhos;
+import com.artur.sardinha.model.Entrada;
 import com.artur.sardinha.repository.EntradaRepository;
 
 import java.util.List;
@@ -13,11 +13,11 @@ public class EntradaService {
         this.entradaRepository = new EntradaRepository();
     }
 
-    public void registrar(Ganhos ganho) {
-        entradaRepository.SalvarEntrada(ganho);
+    public void registrar(Entrada entrada) {
+        entradaRepository.SalvarEntrada(entrada);
     }
 
-    public List<Ganhos> listarTodos() {
+    public List<Entrada> listarTodos() {
         return entradaRepository.buscarTodos();
     }
 

@@ -7,7 +7,7 @@ import com.artur.sardinha.service.RelatorioService;
 import com.artur.sardinha.enums.Categoria;
 import com.artur.sardinha.enums.TipoInvestimento;
 import com.artur.sardinha.model.Gasto;
-import com.artur.sardinha.model.Ganhos;
+import com.artur.sardinha.model.Entrada;
 import com.artur.sardinha.model.Investimento;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -101,8 +101,8 @@ public class Main {
         System.out.print("Data (AAAA-MM-DD): ");
         LocalDate data = LocalDate.parse(scanner.nextLine());
 
-        Ganhos ganho = new Ganhos(0, valor, descricao, data);
-        entradaService.registrar(ganho);
+        Entrada entrada = new Entrada(0, valor, descricao, data);
+        entradaService.registrar(entrada);
     }
     static void registrarInvestimento()
     {
@@ -131,14 +131,14 @@ public class Main {
             default -> TipoInvestimento.RENDA_FIXA;
         };
 
-        // rentabilidade e data de vencimento serão preenchidas via API posteriormente
+        // rentabilidade e data de vencimento serão preenchidas via API depois
         BigDecimal rentabilidade = BigDecimal.ZERO;
         LocalDate dataVencimento = null;
 
         if (tipo == TipoInvestimento.RENDA_FIXA) {
             System.out.print("Nome do título (ex: Tesouro IPCA+ 2029): ");
             String nomeTitulo = scanner.nextLine();
-            // aqui chamaremos a API do Tesouro Nacional futuramente
+            // aqui vou chamar a API do Tesouro Nacional futuramente
             // rentabilidade = CotacaoService.getRentabilidade(nomeTitulo);
             // dataVencimento = CotacaoService.getDataVencimento(nomeTitulo);
         }
@@ -159,7 +159,7 @@ public class Main {
         }
     }
     static void listarEntradas() {
-        List<Ganhos> entradas = entradaService.listarTodos();
+        List<Entrada> entradas = entradaService.listarTodos();
 
         if (entradas.isEmpty()) {
             System.out.println("Nenhuma entrada encontrada!");
@@ -167,7 +167,7 @@ public class Main {
         }
 
         System.out.println("\n===== ENTRADAS =====");
-        for (Ganhos entrada : entradas) {
+        for (Entrada entrada : entradas) {
             System.out.println(entrada);
         }
     }
