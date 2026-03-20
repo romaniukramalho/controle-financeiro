@@ -39,7 +39,9 @@ public class Main {
                 case 5 -> listarEntradas();
                 case 6 -> listarInvestimentos();
                 case 7 -> relatorioService.exibirResumo();
-                case 8 -> deletarEntrada();
+                case 8 -> deletarGasto();
+                case 9 -> deletarEntrada();
+                case 10 -> deletarInvestimento();
                 case 0 -> System.out.println("Saindo...");
                 default -> System.out.println("Opção inválida!");
             }
@@ -55,7 +57,9 @@ public class Main {
         System.out.println("5. Listar Entradas");
         System.out.println("6. Listar Investimentos");
         System.out.println("7. Exibir Resumo Financeiro");
-        System.out.println("8. Deletar Entrada");
+        System.out.println("8. Deletar Gasto");
+        System.out.println("9. Deletar Entrada");
+        System.out.println("10. Deletar Investimento");
         System.out.println("0. Sair");
         System.out.print("Escolha uma opção: ");
     }
@@ -208,5 +212,51 @@ public class Main {
 
         entradaService.deletar(entradadeletada);
         System.out.println("Entrada deletada com sucesso!");
+    }
+    static void deletarInvestimento() {
+        List<Investimento> investimentos = investimentoService.listarTodos();
+
+        if (investimentos.isEmpty()) {
+            System.out.println("Nenhum investimento encontrada!");
+            return;
+        }
+
+        listarInvestimentos();
+        System.out.print("Qual investimento você deseja deletar: ");
+        int investimentodeletado = scanner.nextInt();
+        scanner.nextLine();
+
+        boolean encontrado = investimentos.stream().anyMatch(e -> e.getId() == investimentodeletado);
+
+        if (!encontrado) {
+            System.out.println("Investimento inválido! ID não encontrado.");
+            return;
+        }
+
+        investimentoService.deletar(investimentodeletado);
+        System.out.println("Investimento deletado com sucesso!");
+    }
+    static void deletarGasto() {
+        List<Gasto> gastos = gastoService.listarTodos();
+
+        if (gastos.isEmpty()) {
+            System.out.println("Nenhum gasto encontrada!");
+            return;
+        }
+
+        listarGastos();
+        System.out.print("Qual gasto você deseja deletar: ");
+        int gastodeletado = scanner.nextInt();
+        scanner.nextLine();
+
+        boolean encontrado = gastos.stream().anyMatch(e -> e.getId() == gastodeletado);
+
+        if (!encontrado) {
+            System.out.println("Gasto inválido! ID não encontrado.");
+            return;
+        }
+
+        gastoService.deletar(gastodeletado);
+        System.out.println("Gasto deletado com sucesso!");
     }
 }
