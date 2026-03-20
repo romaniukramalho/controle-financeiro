@@ -39,6 +39,7 @@ public class Main {
                 case 5 -> listarEntradas();
                 case 6 -> listarInvestimentos();
                 case 7 -> relatorioService.exibirResumo();
+                case 8 -> deletarEntrada();
                 case 0 -> System.out.println("Saindo...");
                 default -> System.out.println("Opção inválida!");
             }
@@ -54,6 +55,7 @@ public class Main {
         System.out.println("5. Listar Entradas");
         System.out.println("6. Listar Investimentos");
         System.out.println("7. Exibir Resumo Financeiro");
+        System.out.println("8. Deletar Entrada");
         System.out.println("0. Sair");
         System.out.print("Escolha uma opção: ");
     }
@@ -183,5 +185,28 @@ public class Main {
         for (Investimento investimento : investimentos) {
             System.out.println(investimento);
         }
+    }
+    static void deletarEntrada() {
+        List<Entrada> entradas = entradaService.listarTodos();
+
+        if (entradas.isEmpty()) {
+            System.out.println("Nenhuma entrada encontrada!");
+            return;
+        }
+
+        listarEntradas();
+        System.out.print("Qual entrada você deseja deletar: ");
+        int entradadeletada = scanner.nextInt();
+        scanner.nextLine();
+
+        boolean encontrado = entradas.stream().anyMatch(e -> e.getId() == entradadeletada);
+
+        if (!encontrado) {
+            System.out.println("Entrada inválida! ID não encontrado.");
+            return;
+        }
+
+        entradaService.deletar(entradadeletada);
+        System.out.println("Entrada deletada com sucesso!");
     }
 }
