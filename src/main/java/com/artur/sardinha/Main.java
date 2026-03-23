@@ -46,6 +46,7 @@ public class Main {
                 case 12 -> consultarCotacao();
                 case 13 -> consultarTesouroDireto();
                 case 14 -> consultarCripto();
+                case 15 -> compararMeses();
                 case 0 -> System.out.println("Saindo...");
                 default -> System.out.println("Opção inválida!");
             }
@@ -68,6 +69,7 @@ public class Main {
         System.out.println("12. Consultar preço de ação");
         System.out.println("13. Consultar Tesouro Direto");
         System.out.println("14. Consultar Criptomoeda");
+        System.out.println("15. Comparativo Mensal");
         System.out.println("0. Sair");
         System.out.print("Escolha uma opção: ");
     }
@@ -357,5 +359,20 @@ public class Main {
 
         System.out.println("Buscando cotação...");
         cotacaoService.getCotacaoCripto(moeda);
+    }
+    static void compararMeses() {
+        System.out.print("Mês 1 (1-12): ");
+        int mes1 = scanner.nextInt();
+        System.out.print("Ano 1: ");
+        int ano1 = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Mês 2 (1-12): ");
+        int mes2 = scanner.nextInt();
+        System.out.print("Ano 2: ");
+        int ano2 = scanner.nextInt();
+        scanner.nextLine();
+
+        relatorioService.compararMeses(mes1, ano1, mes2, ano2);
     }
 }
