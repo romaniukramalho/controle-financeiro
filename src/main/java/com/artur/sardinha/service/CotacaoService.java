@@ -44,4 +44,69 @@ public class CotacaoService {
             return BigDecimal.ZERO;
         }
     }
+    public void getDadosIndicadores(String indicador) {
+        try {
+            String codigoSerie = switch (indicador) {
+                case "SELIC" -> "11";
+                case "IPCA"  -> "433";
+                case "CDI"   -> "12";
+                default -> null;
+            };
+
+            if (codigoSerie == null) {
+                System.out.println("Indicador inválido!");
+                return;
+            }
+
+            String uri = "https://api.bcb.gov.br/dados/serie/bcdata.sgs." + codigoSerie + "/dados/ultimos/1?formato=json";
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(uri))
+                    .header("Accept", "application/json")
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            JsonNode json = mapper.readTree(response.body());
+            JsonNode ultimo = json.get(0);
+
+            String data = ultimo.get("data").asText();
+            String valor = ultimo.get("valor").asText();
+
+            System.out.println("Indicador: " + indicador);
+            System.out.println("Data: " + data);
+            System.out.println("Valor: " + valor + "%");
+
+        } catch (IOException | InterruptedException e) {
+            System.out.println("Erro ao buscar indicador: " + e.getMessage());
+        }
+    }
+    public void getCotacaoCripto(String moeda) {
+        try {
+            String uri = "https://api.coingecko.com/api/v3/simple/price?ids=" + moeda + "&vs_currencies=brl";
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(uri))
+                    .header("Accept", "application/json")
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            JsonNode json = mapper.readTree(response.body());
+            JsonNode preco = json.get(moeda);
+
+            if (preco == null) {
+                System.out.println("Criptomoeda não encontrada: " + moeda);
+                return;
+            }
+
+            String valor = preco.get("brl").asText();
+            System.out.println("Cotação de " + moeda + ": R$ " + valor);
+
+        } catch (IOException | InterruptedException e) {
+            System.out.println("Erro ao buscar cotação: " + e.getMessage());
+        }
+    }
 }

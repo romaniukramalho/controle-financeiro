@@ -19,7 +19,7 @@ public class InvestimentoRepository
 
     public void SalvarInvestimento(Investimento investimento)
     {
-        String sql = "INSERT INTO investimentos (valor, descricao, data, tipo_investimento, rentabilidade) VALUES (?, ? ,?, ? ,?)";
+        String sql = "INSERT INTO investimentos (valor, nome, data, tipo_investimento, rentabilidade) VALUES (?, ? ,?, ? ,?)";
 
         try
         {
@@ -54,7 +54,7 @@ public class InvestimentoRepository
                 Investimento investimento = new Investimento(
                         rs.getInt("id"),
                         rs.getBigDecimal("valor"),
-                        rs.getString("descricao"),
+                        rs.getString("nome"),
                         rs.getDate("data").toLocalDate(),
                         TipoInvestimento.valueOf(rs.getString("tipo_investimento")),
                         rs.getBigDecimal("rentabilidade")
@@ -71,7 +71,7 @@ public class InvestimentoRepository
 
     public void deletar(int id)
     {
-        String sql = "DELETE FROM Investimentos WHERE id = ?";
+        String sql = "DELETE FROM investimentos WHERE id = ?";
         try
         {
             PreparedStatement ps = conn.prepareStatement(sql);

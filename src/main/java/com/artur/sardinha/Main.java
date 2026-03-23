@@ -41,6 +41,8 @@ public class Main {
                 case 9 -> deletarEntrada();
                 case 10 -> deletarInvestimento();
                 case 11 -> consultarCotacao();
+                case 12 -> consultarTesouroDireto();
+                case 13 -> consultarCripto();
                 case 0 -> System.out.println("Saindo...");
                 default -> System.out.println("Opção inválida!");
             }
@@ -60,6 +62,8 @@ public class Main {
         System.out.println("9. Deletar Entrada");
         System.out.println("10. Deletar Investimento");
         System.out.println("11. Consultar preço de ação");
+        System.out.println("12. Consultar Tesouro Direto");
+        System.out.println("13. Consultar Criptomoeda");
         System.out.println("0. Sair");
         System.out.print("Escolha uma opção: ");
     }
@@ -112,8 +116,8 @@ public class Main {
     }
     static void registrarInvestimento()
     {
-        System.out.print("Descrição: ");
-        String descricao = scanner.nextLine();
+        System.out.print("Nome da ação (ex: PETR4.SAO): ");
+        String desc = scanner.nextLine();
 
         System.out.print("Valor investido: ");
         BigDecimal valor = scanner.nextBigDecimal();
@@ -147,7 +151,7 @@ public class Main {
             // rentabilidade = CotacaoService.getRentabilidade(nomeTitulo);
             // dataVencimento = CotacaoService.getDataVencimento(nomeTitulo);
         }
-        Investimento investimento = new Investimento(0, valor, descricao, data, tipo, rentabilidade);
+        Investimento investimento = new Investimento(0, valor, desc, data, tipo, rentabilidade);
         investimentoService.registrar(investimento);
     }
     static void listarGastos() {
@@ -187,6 +191,22 @@ public class Main {
         System.out.println("\n===== INVESTIMENTOS =====");
         for (Investimento investimento : investimentos) {
             System.out.println(investimento);
+
+            switch (investimento.getTipoInvestimento()) {
+                case STOCKS -> {
+                    System.out.println("Buscando cotação da ação...");
+                    cotacaoService.getCotacao(investimento.getDesc());
+                }
+                case CRIPTO -> {
+                    System.out.println("Buscando cotação da cripto...");
+                    cotacaoService.getCotacaoCripto(investimento.getDesc());
+                }
+                case RENDA_FIXA -> {
+                    System.out.println("Buscando indicadores...");
+                    cotacaoService.getDadosIndicadores("SELIC");
+                }
+            }
+            System.out.println("---");
         }
     }
     static void deletarEntrada() {
@@ -283,5 +303,37 @@ public class Main {
         for (Investimento investimento : investimentos) {
             System.out.println(investimento);
         }
+    }
+    static void consultarTesouroDireto() {
+        System.out.println("Escolha o indicador:");
+        System.out.println("1. SELIC");
+        System.out.println("2. IPCA");
+        System.out.println("3. CDI");
+        System.out.print("Escolha: ");
+        int opcao = scanner.nextInt();
+        scanner.nextLine();
+
+        String indicador = switch (opcao) {
+            case 1 -> "SELIC";
+            case 2 -> "IPCA";
+            case 3 -> "CDI";
+            default -> null;
+        };
+
+        if (indicador == null) {
+            System.out.println("Opção inválida!");
+            return;
+        }
+
+        cotacaoService.getDadosIndicadores(indicador);
+    }
+    static void consultarCripto() {
+        System.out.println("Digite o nome da criptomoeda:");
+        System.out.println("Exemplos: bitcoin, ethereum, solana, cardano");
+        System.out.print("Nome: ");
+        String moeda = scanner.nextLine().toLowerCase();
+
+        System.out.println("Buscando cotação...");
+        cotacaoService.getCotacaoCripto(moeda);
     }
 }
