@@ -142,7 +142,6 @@ public class Main {
         };
 
         // rentabilidade e data de vencimento serão preenchidas via API depois
-        BigDecimal rentabilidade = BigDecimal.ZERO;
         LocalDate dataVencimento = null;
         if (tipo == TipoInvestimento.RENDA_FIXA) {
             System.out.print("Nome do título (ex: Tesouro IPCA+ 2029): ");
@@ -151,7 +150,7 @@ public class Main {
             // rentabilidade = CotacaoService.getRentabilidade(nomeTitulo);
             // dataVencimento = CotacaoService.getDataVencimento(nomeTitulo);
         }
-        Investimento investimento = new Investimento(0, valor, desc, data, tipo, rentabilidade);
+        Investimento investimento = new Investimento(0, valor, desc, data, tipo);
         investimentoService.registrar(investimento);
     }
     static void listarGastos() {
@@ -279,7 +278,7 @@ public class Main {
         System.out.println("Gasto deletado com sucesso!");
     }
     static void consultarCotacao() {
-        System.out.print("Digite o símbolo da ação (ex: PETR4.SAO, AAPL): ");
+        System.out.print("Digite o nome da ação (ex: PETR4.SAO, AAPL): ");
         String simbolo = scanner.nextLine();
 
         System.out.println("Buscando cotação...");

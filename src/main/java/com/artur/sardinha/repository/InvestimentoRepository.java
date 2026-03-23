@@ -19,8 +19,7 @@ public class InvestimentoRepository
 
     public void SalvarInvestimento(Investimento investimento)
     {
-        String sql = "INSERT INTO investimentos (valor, nome, data, tipo_investimento, rentabilidade) VALUES (?, ? ,?, ? ,?)";
-
+        String sql = "INSERT INTO investimentos (valor, nome, data, tipo_investimento) VALUES (?, ?, ?, ?)";
         try
         {
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -28,7 +27,6 @@ public class InvestimentoRepository
             ps.setString(2, investimento.getDesc());
             ps.setDate(3, Date.valueOf(investimento.getData()));
             ps.setString(4, investimento.getTipoInvestimento().name());
-            ps.setBigDecimal(5, investimento.getRentabilidade());
 
             ps.executeUpdate();
             System.out.println("Investimento cadastrado com sucesso!");
@@ -56,8 +54,7 @@ public class InvestimentoRepository
                         rs.getBigDecimal("valor"),
                         rs.getString("nome"),
                         rs.getDate("data").toLocalDate(),
-                        TipoInvestimento.valueOf(rs.getString("tipo_investimento")),
-                        rs.getBigDecimal("rentabilidade")
+                        TipoInvestimento.valueOf(rs.getString("tipo_investimento"))
                 );
                 investimentos.add(investimento);
             }

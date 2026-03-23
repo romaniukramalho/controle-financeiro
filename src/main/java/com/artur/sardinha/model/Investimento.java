@@ -8,14 +8,12 @@ import java.time.LocalDate;
 public class Investimento extends Transactions
 {
     private TipoInvestimento tipoInvestimento;
-    private BigDecimal rentabilidade;
     private LocalDate vencimento;
-    public Investimento(int id, BigDecimal valor, String desc, LocalDate data, TipoInvestimento tipoInvestimento, BigDecimal rentabilidade)
+    public Investimento(int id, BigDecimal valor, String desc, LocalDate data, TipoInvestimento tipoInvestimento)
     {
         super(id, valor, desc, data);
 
         this.tipoInvestimento = tipoInvestimento;
-        this.rentabilidade = rentabilidade;
     }
     @Override
     public TipoTransaction getTipo() {
@@ -25,19 +23,12 @@ public class Investimento extends Transactions
         return tipoInvestimento;
     }
 
-    public BigDecimal getRentabilidade()
-    {
-        return rentabilidade;
-    }
-
-    // ✅ correto
     @Override
     public String toString() {
         return "ID: " + id +
                 " | Descrição: " + desc +
                 " | Valor: R$ " + valor +
                 " | Tipo: " + tipoInvestimento +
-                " | Rentabilidade: " + rentabilidade +
                 " | Data: " + data;
     }
 }
