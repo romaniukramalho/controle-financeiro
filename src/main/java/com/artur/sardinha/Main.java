@@ -141,14 +141,9 @@ public class Main {
             default -> TipoInvestimento.RENDA_FIXA;
         };
 
-        // rentabilidade e data de vencimento serão preenchidas via API depois
-        LocalDate dataVencimento = null;
         if (tipo == TipoInvestimento.RENDA_FIXA) {
             System.out.print("Nome do título (ex: Tesouro IPCA+ 2029): ");
             String nomeTitulo = scanner.nextLine();
-            // aqui vou chamar a API do Tesouro Nacional futuramente
-            // rentabilidade = CotacaoService.getRentabilidade(nomeTitulo);
-            // dataVencimento = CotacaoService.getDataVencimento(nomeTitulo);
         }
         Investimento investimento = new Investimento(0, valor, desc, data, tipo);
         investimentoService.registrar(investimento);
