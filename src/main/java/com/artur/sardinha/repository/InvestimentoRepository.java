@@ -2,7 +2,6 @@ package com.artur.sardinha.repository;
 
 import com.artur.sardinha.enums.TipoInvestimento;
 import com.artur.sardinha.service.DatabaseConnection;
-import com.artur.sardinha.enums.Categoria;
 import com.artur.sardinha.model.Investimento;
 
 import java.sql.*;
@@ -72,7 +71,7 @@ public class InvestimentoRepository
 
     public void deletar(int id)
     {
-        String sql = "DELETE FROM Ganhos WHERE id = ?";
+        String sql = "DELETE FROM Investimentos WHERE id = ?";
         try
         {
             PreparedStatement ps = conn.prepareStatement(sql);

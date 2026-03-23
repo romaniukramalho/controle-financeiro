@@ -1,9 +1,6 @@
 package com.artur.sardinha;
 
-import com.artur.sardinha.service.GastoService;
-import com.artur.sardinha.service.EntradaService;
-import com.artur.sardinha.service.InvestimentoService;
-import com.artur.sardinha.service.RelatorioService;
+import com.artur.sardinha.service.*;
 import com.artur.sardinha.enums.Categoria;
 import com.artur.sardinha.enums.TipoInvestimento;
 import com.artur.sardinha.model.Gasto;
@@ -21,6 +18,7 @@ public class Main {
     static EntradaService entradaService = new EntradaService();
     static InvestimentoService investimentoService = new InvestimentoService();
     static RelatorioService relatorioService = new RelatorioService();
+    static CotacaoService cotacaoService = new CotacaoService();
 
 
     public static void main(String[] args) {
@@ -42,6 +40,7 @@ public class Main {
                 case 8 -> deletarGasto();
                 case 9 -> deletarEntrada();
                 case 10 -> deletarInvestimento();
+                case 11 -> consultarCotacao();
                 case 0 -> System.out.println("Saindo...");
                 default -> System.out.println("Opção inválida!");
             }
@@ -60,6 +59,7 @@ public class Main {
         System.out.println("8. Deletar Gasto");
         System.out.println("9. Deletar Entrada");
         System.out.println("10. Deletar Investimento");
+        System.out.println("11. Consultar preço de ação");
         System.out.println("0. Sair");
         System.out.print("Escolha uma opção: ");
     }
@@ -140,7 +140,6 @@ public class Main {
         // rentabilidade e data de vencimento serão preenchidas via API depois
         BigDecimal rentabilidade = BigDecimal.ZERO;
         LocalDate dataVencimento = null;
-
         if (tipo == TipoInvestimento.RENDA_FIXA) {
             System.out.print("Nome do título (ex: Tesouro IPCA+ 2029): ");
             String nomeTitulo = scanner.nextLine();
@@ -221,7 +220,7 @@ public class Main {
             return;
         }
 
-        listarInvestimentos();
+        listarInvestimentosSemCotacao();
         System.out.print("Qual investimento você deseja deletar: ");
         int investimentodeletado = scanner.nextInt();
         scanner.nextLine();
@@ -258,5 +257,31 @@ public class Main {
 
         gastoService.deletar(gastodeletado);
         System.out.println("Gasto deletado com sucesso!");
+    }
+    static void consultarCotacao() {
+        System.out.print("Digite o símbolo da ação (ex: PETR4.SAO, AAPL): ");
+        String simbolo = scanner.nextLine();
+
+        System.out.println("Buscando cotação...");
+        BigDecimal preco = cotacaoService.getCotacao(simbolo);
+
+        if (preco.compareTo(BigDecimal.ZERO) == 0) {
+            System.out.println("Não foi possível encontrar a cotação para: " + simbolo);
+        } else {
+            System.out.println("Preço atual de " + simbolo + ": R$ " + preco);
+        }
+    }
+    static void listarInvestimentosSemCotacao() {
+        List<Investimento> investimentos = investimentoService.listarTodos();
+
+        if (investimentos.isEmpty()) {
+            System.out.println("Nenhum investimento encontrado!");
+            return;
+        }
+
+        System.out.println("\n===== INVESTIMENTOS =====");
+        for (Investimento investimento : investimentos) {
+            System.out.println(investimento);
+        }
     }
 }

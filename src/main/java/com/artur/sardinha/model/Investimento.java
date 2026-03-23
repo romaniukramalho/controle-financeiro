@@ -30,14 +30,15 @@ public class Investimento extends Transactions
     {
         return rentabilidade;
     }
+
+    // ✅ correto
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "ID: " + id +
-                " | Tipo: " + getTipo() +
                 " | Descrição: " + desc +
                 " | Valor: R$ " + valor +
-                " | Data: " + data +
-                " | Rentabilidade: " + rentabilidade;
+                " | Tipo: " + tipoInvestimento +
+                " | Rentabilidade: " + rentabilidade +
+                " | Data: " + data;
     }
 }

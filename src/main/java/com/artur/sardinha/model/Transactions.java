@@ -45,7 +45,7 @@ public abstract class Transactions
         return "ID: " + id +
                 " | Descrição: " + desc +
                 " | Valor: R$ " + valor +
-                " | com.artur.sardinha.enums.Categoria: " + categoria +
+                (categoria != null ? " | Categoria: " + categoria : "") +
                 " | Data: " + data;
     }
     public Categoria getCategoria()
