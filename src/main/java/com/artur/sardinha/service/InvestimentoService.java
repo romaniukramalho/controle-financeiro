@@ -1,5 +1,6 @@
 package com.artur.sardinha.service;
 
+import com.artur.sardinha.model.Deposito;
 import com.artur.sardinha.model.Investimento;
 import com.artur.sardinha.repository.InvestimentoRepository;
 
@@ -14,11 +15,15 @@ public class InvestimentoService {
     }
 
     public void registrar(Investimento investimento) {
-        investimentoRepository.SalvarInvestimento(investimento);
+        investimentoRepository.salvarInvestimento(investimento);
     }
 
     public List<Investimento> listarTodos() {
         return investimentoRepository.BuscarTodos();
+    }
+
+    public List<Deposito> listarDepositos(int investimentoId) {
+        return investimentoRepository.buscarDepositos(investimentoId);
     }
 
     public void deletar(int id) {

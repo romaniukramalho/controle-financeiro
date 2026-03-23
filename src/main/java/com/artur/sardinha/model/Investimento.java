@@ -24,6 +24,9 @@ public class Investimento extends Transactions
 
     @Override
     public String toString() {
-        return super.toString() + " | Tipo: " + tipoInvestimento;
+        return "ID: " + id +
+                " | Nome: " + desc +
+                " | Valor Total: R$ " + valor +
+                " | Tipo: " + tipoInvestimento;
     }
 }

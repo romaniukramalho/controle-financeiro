@@ -6,6 +6,8 @@ import com.artur.sardinha.enums.TipoInvestimento;
 import com.artur.sardinha.model.Gasto;
 import com.artur.sardinha.model.Entrada;
 import com.artur.sardinha.model.Investimento;
+import com.artur.sardinha.model.Deposito;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -36,13 +38,14 @@ public class Main {
                 case 4 -> listarGastos();
                 case 5 -> listarEntradas();
                 case 6 -> listarInvestimentos();
-                case 7 -> relatorioService.exibirResumo();
-                case 8 -> deletarGasto();
-                case 9 -> deletarEntrada();
-                case 10 -> deletarInvestimento();
-                case 11 -> consultarCotacao();
-                case 12 -> consultarTesouroDireto();
-                case 13 -> consultarCripto();
+                case 7 -> listarDepositos();
+                case 8 -> relatorioService.exibirResumo();
+                case 9 -> deletarGasto();
+                case 10 -> deletarEntrada();
+                case 11 -> deletarInvestimento();
+                case 12 -> consultarCotacao();
+                case 13 -> consultarTesouroDireto();
+                case 14 -> consultarCripto();
                 case 0 -> System.out.println("Saindo...");
                 default -> System.out.println("Opção inválida!");
             }
@@ -57,13 +60,14 @@ public class Main {
         System.out.println("4. Listar Gastos");
         System.out.println("5. Listar Entradas");
         System.out.println("6. Listar Investimentos");
-        System.out.println("7. Exibir Resumo Financeiro");
-        System.out.println("8. Deletar Gasto");
-        System.out.println("9. Deletar Entrada");
-        System.out.println("10. Deletar Investimento");
-        System.out.println("11. Consultar preço de ação");
-        System.out.println("12. Consultar Tesouro Direto");
-        System.out.println("13. Consultar Criptomoeda");
+        System.out.println("7. Listar Depósitos de Investimento");
+        System.out.println("8. Exibir Resumo Financeiro");
+        System.out.println("9. Deletar Gasto");
+        System.out.println("10. Deletar Entrada");
+        System.out.println("11. Deletar Investimento");
+        System.out.println("12. Consultar preço de ação");
+        System.out.println("13. Consultar Tesouro Direto");
+        System.out.println("14. Consultar Criptomoeda");
         System.out.println("0. Sair");
         System.out.print("Escolha uma opção: ");
     }
@@ -114,16 +118,15 @@ public class Main {
         Entrada entrada = new Entrada(0, valor, descricao, data);
         entradaService.registrar(entrada);
     }
-    static void registrarInvestimento()
-    {
-        System.out.print("Nome da ação (ex: PETR4.SAO): ");
-        String desc = scanner.nextLine();
+    static void registrarInvestimento() {
+        System.out.print("Nome do investimento (ex: PETR4.SAO, bitcoin): ");
+        String nome = scanner.nextLine();
 
-        System.out.print("Valor investido: ");
+        System.out.print("Valor aportado: ");
         BigDecimal valor = scanner.nextBigDecimal();
         scanner.nextLine();
 
-        System.out.print("Data do investimento (AAAA-MM-DD): ");
+        System.out.print("Data do aporte (AAAA-MM-DD): ");
         LocalDate data = LocalDate.parse(scanner.nextLine());
 
         System.out.println("Tipo de Investimento:");
@@ -138,14 +141,10 @@ public class Main {
             case 1 -> TipoInvestimento.STOCKS;
             case 2 -> TipoInvestimento.RENDA_FIXA;
             case 3 -> TipoInvestimento.CRIPTO;
-            default -> TipoInvestimento.RENDA_FIXA;
+            default -> TipoInvestimento.STOCKS;
         };
 
-        if (tipo == TipoInvestimento.RENDA_FIXA) {
-            System.out.print("Nome do título (ex: Tesouro IPCA+ 2029): ");
-            String nomeTitulo = scanner.nextLine();
-        }
-        Investimento investimento = new Investimento(0, valor, desc, data, tipo);
+        Investimento investimento = new Investimento(0, valor, nome, data, tipo);
         investimentoService.registrar(investimento);
     }
     static void listarGastos() {
@@ -189,7 +188,10 @@ public class Main {
             switch (investimento.getTipoInvestimento()) {
                 case STOCKS -> {
                     System.out.println("Buscando cotação da ação...");
-                    cotacaoService.getCotacao(investimento.getDesc());
+                    BigDecimal cotacao = cotacaoService.getCotacao(investimento.getDesc());
+                    if (cotacao.compareTo(BigDecimal.ZERO) > 0) {
+                        System.out.println("Cotação atual: R$ " + cotacao);
+                    }
                 }
                 case CRIPTO -> {
                     System.out.println("Buscando cotação da cripto...");
@@ -201,6 +203,32 @@ public class Main {
                 }
             }
             System.out.println("---");
+
+        }
+    }
+    static void listarDepositos() {
+        List<Investimento> investimentos = investimentoService.listarTodos();
+
+        if (investimentos.isEmpty()) {
+            System.out.println("Nenhum investimento encontrado!");
+            return;
+        }
+
+        listarInvestimentosSemCotacao();
+        System.out.print("Digite o ID do investimento: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        List<Deposito> depositos = investimentoService.listarDepositos(id);
+
+        if (depositos.isEmpty()) {
+            System.out.println("Nenhum depósito encontrado!");
+            return;
+        }
+
+        System.out.println("\n===== DEPÓSITOS =====");
+        for (Deposito deposito : depositos) {
+            System.out.println(deposito);
         }
     }
     static void deletarEntrada() {
