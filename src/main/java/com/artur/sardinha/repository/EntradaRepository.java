@@ -50,7 +50,7 @@ public class EntradaRepository
                 entradas.add(ganho);
             }
         } catch (SQLException e) {
-            System.out.println("Nao foi possivel buscar os gastos" + e.getMessage());
+            System.out.println("Nao foi possivel buscar as entradas" + e.getMessage());
         }
 
         return entradas;

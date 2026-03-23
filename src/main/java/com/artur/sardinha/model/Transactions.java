@@ -3,7 +3,6 @@ package com.artur.sardinha.model;
 import com.artur.sardinha.enums.Categoria;
 import com.artur.sardinha.enums.TipoTransaction;
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.time.LocalDate;
 
 public abstract class Transactions
