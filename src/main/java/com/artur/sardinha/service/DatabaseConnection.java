@@ -6,9 +6,17 @@ import java.sql.SQLException;
 
 public class DatabaseConnection {
 
-    private static final String URL = "jdbc:postgresql://localhost:5432/sardinha";
-    private static final String USUARIO = "arturramalho";
-    private static final String SENHA = "";
+    private static final String URL = System.getenv("DB_URL") != null
+            ? System.getenv("DB_URL")
+            : "jdbc:postgresql://localhost:5432/sardinha";
+
+    private static final String USUARIO = System.getenv("DB_USER") != null
+            ? System.getenv("DB_USER")
+            : "arturramalho";
+
+    private static final String SENHA = System.getenv("DB_PASSWORD") != null
+            ? System.getenv("DB_PASSWORD")
+            : "";
 
     public static Connection conectar() {
         try {

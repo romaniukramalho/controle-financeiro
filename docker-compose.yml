@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: sardinha-db
+    environment:
+      POSTGRES_DB: sardinha
+      POSTGRES_USER: arturramalho
+      POSTGRES_PASSWORD: ""
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+
+  app:
+    build: .
+    container_name: sardinha-app
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/sardinha
+      DB_USER: arturramalho
+      DB_PASSWORD: ""
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
