@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   db:
     image: postgres:15
@@ -8,11 +6,17 @@ services:
       POSTGRES_DB: sardinha
       POSTGRES_USER: arturramalho
       POSTGRES_PASSWORD: ""
+      POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U arturramalho -d sardinha" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   app:
     build: .
@@ -22,7 +26,10 @@ services:
       DB_USER: arturramalho
       DB_PASSWORD: ""
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
 
 volumes:
   postgres_data:

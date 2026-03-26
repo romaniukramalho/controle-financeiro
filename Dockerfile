@@ -1,4 +1,4 @@
-FROM maven:3.9-eclipse-temurin-17-alpine
+FROM maven:3.9-eclipse-temurin-17
 LABEL maintainer="Artur Ramalho <arturramalhocs@gmail.com>"
 
 WORKDIR /app
