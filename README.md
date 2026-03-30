@@ -1,10 +1,10 @@
-# Sistema de Controle Financeiro Pessoal
+# 💰 Sistema de Controle Financeiro Pessoal
 
 Sistema de controle financeiro desenvolvido em Java com arquitetura em camadas, banco de dados PostgreSQL e integração com APIs externas para cotação de ativos em tempo real.
 
 ---
 
-## Tecnologias Utilizadas
+## 🛠️ Tecnologias Utilizadas
 
 - **Java 17** — linguagem principal
 - **PostgreSQL** — banco de dados relacional
@@ -16,8 +16,9 @@ Sistema de controle financeiro desenvolvido em Java com arquitetura em camadas, 
 
 ---
 
-## Estrutura do Projeto
+## 📁 Estrutura do Projeto
 
+```
 src/main/java/com/artur/sardinha/
 ├── model/
 │   ├── Transactions.java        # Classe abstrata base
@@ -41,10 +42,11 @@ src/main/java/com/artur/sardinha/
 │   ├── RelatorioService.java    # Relatórios e comparativos
 │   └── CotacaoService.java      # Integração com APIs externas
 └── Main.java                    # Menu principal
+```
 
 ---
 
-## APIs Utilizadas
+## 🌐 APIs Utilizadas
 
 | API | Finalidade | Documentação |
 |---|---|---|
@@ -54,8 +56,9 @@ src/main/java/com/artur/sardinha/
 
 ---
 
-## Modelo do Banco de Dados
+## 🗄️ Modelo do Banco de Dados
 
+```
 gastos
 ├── id, valor, descricao, data, categoria
 
@@ -67,15 +70,14 @@ investimentos
 
 depositos
 ├── id, investimento_id (FK), valor, data
+```
 
 ---
 
-## Funcionalidades
+## ✨ Funcionalidades
 
 - Registro e listagem de gastos, entradas e investimentos
 - Histórico de aportes por investimento
 - Cotação em tempo real de ações, criptomoedas e índices econômicos
 - Relatório financeiro com saldo e patrimônio total
 - Comparativo mensal de gastos, entradas e aportes
-
----
