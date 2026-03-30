@@ -1,4 +1,4 @@
-# 💰 Sistema de Controle Financeiro Pessoal
+# 💰API de Sistema de Controle Financeiro
 
 Sistema de controle financeiro desenvolvido em Java com arquitetura em camadas, banco de dados PostgreSQL e integração com APIs externas para cotação de ativos em tempo real.
 
