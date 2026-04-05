@@ -16,6 +16,25 @@ Sistema de controle financeiro desenvolvido em Java com arquitetura em camadas, 
 
 ---
 
+## ⚙️ Configuração
+
+1. Clone o repositório
+2. Crie um arquivo `.env` na raiz do projeto baseado no `.env.example`:
+```
+ DB_URL=jdbc:postgresql://localhost:5432/sardinha
+ DB_USER=seu_usuario
+ DB_PASSWORD=sua_senha
+ ALPHA_VANTAGE_KEY=sua_chave
+```
+4. Para obter a API Key da Alpha Vantage acesse: https://www.alphavantage.co/support/#api-key
+
+5. Execute com Docker:
+```bash
+docker-compose up --build
+```
+
+---
+
 ## 📁 Estrutura do Projeto
 
 ```
