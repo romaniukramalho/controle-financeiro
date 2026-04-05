@@ -12,7 +12,7 @@ import java.net.http.HttpResponse;
 
 public class CotacaoService {
 
-    private static final String API_KEY = "U9ULXFRQ9X9NMRL2";
+    private static final String API_KEY = System.getenv("ALPHA_VANTAGE_KEY");
     private static final String URL = "https://www.alphavantage.co/query";
     private final HttpClient client = HttpClient.newHttpClient();
     private final ObjectMapper mapper = new ObjectMapper();
