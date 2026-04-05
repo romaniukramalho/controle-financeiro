@@ -191,6 +191,11 @@ public class Main {
                 case STOCKS -> {
                     System.out.println("Buscando cotação da ação...");
                     BigDecimal cotacao = cotacaoService.getCotacao(investimento.getDesc());
+                    try {
+                        Thread.sleep(1500); // aguarda 1.5 segundos entre requisições pra evitar bug
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
                     if (cotacao.compareTo(BigDecimal.ZERO) > 0) {
                         System.out.println("Cotação atual: R$ " + cotacao);
                     }
