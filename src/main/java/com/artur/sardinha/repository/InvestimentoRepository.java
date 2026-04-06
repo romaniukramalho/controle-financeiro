@@ -106,6 +106,17 @@ public class InvestimentoRepository {
         }
         return depositos;
     }
+    public void deletarDeposito(int id) {
+        String sql = "DELETE FROM depositos WHERE id = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            System.out.println("Depósito deletado com sucesso!");
+        } catch (SQLException e) {
+            System.out.println("Não foi possível excluir o depósito: " + e.getMessage());
+        }
+    }
 
     public void deletar(int id) {
         String sql = "DELETE FROM investimentos WHERE id = ?";

@@ -43,10 +43,11 @@ public class Main {
                 case 9 -> deletarGasto();
                 case 10 -> deletarEntrada();
                 case 11 -> deletarInvestimento();
-                case 12 -> consultarCotacao();
-                case 13 -> consultarTesouroDireto();
-                case 14 -> consultarCripto();
-                case 15 -> compararMeses();
+                case 12 -> deletarDeposito();
+                case 13 -> consultarCotacao();
+                case 14 -> consultarTesouroDireto();
+                case 15 -> consultarCripto();
+                case 16 -> compararMeses();
                 case 0 -> System.out.println("Saindo...");
                 default -> System.out.println("Opção inválida!");
             }
@@ -66,10 +67,11 @@ public class Main {
         System.out.println("9. Deletar Gasto");
         System.out.println("10. Deletar Entrada");
         System.out.println("11. Deletar Investimento");
-        System.out.println("12. Consultar preço de ação");
-        System.out.println("13. Consultar Tesouro Direto");
-        System.out.println("14. Consultar Criptomoeda");
-        System.out.println("15. Comparativo Mensal");
+        System.out.println("12. Deletar Deposito");
+        System.out.println("13. Consultar preço de ação");
+        System.out.println("14. Consultar Tesouro Direto");
+        System.out.println("15. Consultar Criptomoeda");
+        System.out.println("16. Comparativo Mensal");
         System.out.println("0. Sair");
         System.out.print("Escolha uma opção: ");
     }
@@ -197,7 +199,7 @@ public class Main {
                         Thread.currentThread().interrupt();
                     }
                     if (cotacao.compareTo(BigDecimal.ZERO) > 0) {
-                        System.out.println("Cotação atual: R$ " + cotacao);
+                        System.out.println("Cotação atual: R$ " + cotacao.setScale(2, java.math.RoundingMode.HALF_UP));
                     }
                 }
                 case CRIPTO -> {
@@ -317,7 +319,7 @@ public class Main {
         if (preco.compareTo(BigDecimal.ZERO) == 0) {
             System.out.println("Não foi possível encontrar a cotação para: " + simbolo);
         } else {
-            System.out.println("Preço atual de " + simbolo + ": R$ " + preco);
+            System.out.println("Preço atual de " + simbolo + ": R$ " + preco.setScale(2, java.math.RoundingMode.HALF_UP));
         }
     }
     static void listarInvestimentosSemCotacao() {
@@ -379,5 +381,43 @@ public class Main {
         scanner.nextLine();
 
         relatorioService.compararMeses(mes1, ano1, mes2, ano2);
+    }
+    static void deletarDeposito() {
+        List<Investimento> investimentos = investimentoService.listarTodos();
+
+        if (investimentos.isEmpty()) {
+            System.out.println("Nenhum investimento encontrado!");
+            return;
+        }
+
+        listarInvestimentosSemCotacao();
+        System.out.print("Digite o ID do investimento: ");
+        int investimentoId = scanner.nextInt();
+        scanner.nextLine();
+
+        List<Deposito> depositos = investimentoService.listarDepositos(investimentoId);
+
+        if (depositos.isEmpty()) {
+            System.out.println("Nenhum depósito encontrado!");
+            return;
+        }
+
+        System.out.println("\n===== DEPÓSITOS =====");
+        for (Deposito deposito : depositos) {
+            System.out.println(deposito);
+        }
+
+        System.out.print("Digite o ID do depósito que deseja deletar: ");
+        int depositoId = scanner.nextInt();
+        scanner.nextLine();
+
+        boolean encontrado = depositos.stream().anyMatch(d -> d.getId() == depositoId);
+
+        if (!encontrado) {
+            System.out.println("Depósito inválido! ID não encontrado.");
+            return;
+        }
+
+        investimentoService.deletarDeposito(depositoId);
     }
 }

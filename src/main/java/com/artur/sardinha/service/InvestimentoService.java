@@ -25,6 +25,10 @@ public class InvestimentoService {
     public List<Deposito> listarDepositos(int investimentoId) {
         return investimentoRepository.buscarDepositos(investimentoId);
     }
+    public void deletarDeposito(int id)
+    {
+        investimentoRepository.deletarDeposito(id);
+    }
 
     public void deletar(int id) {
         investimentoRepository.deletar(id);
